@@ -1,3 +1,4 @@
+from enum import unique
 from app import db, login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -33,7 +34,7 @@ class BaseModel:
         db.session.commit()
 
 
-class User(db, UserMixin, BaseModel):
+class User(db.Model, UserMixin, BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False, unique=True, index=True)
     last_name = db.Column(db.String(64), nullable=False, unique=True, index=True)
@@ -41,8 +42,8 @@ class User(db, UserMixin, BaseModel):
     password_hash = db.Column(db.String(225))
     gender = db.Column(db.String(64), nullable=False)
     birth_date = db.Column(db.DateTime, nullable=False)
-    mobile_number = db.Column(db.Integer)
-    passport_id = db.Column(db.Integer)
+    mobile_number = db.Column(db.Integer,unique=True,index=True)
+    passport_id = db.Column(db.Integer,unique=True,index=True)
     country = db.Column(db.String(64), nullable=False)
     city = db.Column(db.String(64), nullable=False)
     region = db.Column(db.String(64), nullable=False)
@@ -61,9 +62,9 @@ class User(db, UserMixin, BaseModel):
     program = db.Column(db.String(64), nullable=True)
 
     def __init__(self, name, last_name, email, password, gender, birth_date, mobile_number, passport_id, country, city,
-                 region, address, role, school_number=None, school_class_number=None, parent_name=None,
-                 parent_mobile_number=None, university=None,
-                 degree=None, education_level=None, faculty=None, program=None):
+                    region, address, role, school_number=None, school_class_number=None, parent_name=None,
+                    parent_mobile_number=None, university=None,
+                    degree=None, education_level=None, faculty=None, program=None):
         self.name = name
         self.last_name = last_name
         self.email = email
@@ -98,9 +99,4 @@ class User(db, UserMixin, BaseModel):
 
     def __repr__(self):
         return f'{self.name} {self.last_name}, {self.role}, are created'
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
 
