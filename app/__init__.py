@@ -15,7 +15,7 @@ def create_app():
 
     # register_commands(app)
     # register_extensions(app)
-    # register_blueprints(app)
+    register_blueprints(app)
     # register_admin_panel(app)
 
     return app
@@ -38,9 +38,8 @@ def register_extensions(app):
 
 def register_blueprints(app):
 
-    for blueprint in BLUEPRINTS:
-        app.register_blueprint(blueprint)
-
+    from app.auth.views import user_blueprint
+    app.register_blueprint(user_blueprint)
 
 def register_commands(app):
 
