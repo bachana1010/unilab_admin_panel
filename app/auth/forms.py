@@ -3,7 +3,7 @@ from xmlrpc.client import Boolean
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField,EmailField,PasswordField,SelectField,DateField,TelField,IntegerField,BooleanField
 from wtforms.validators import DataRequired,Email, Length,ValidationError
-
+from .models import User
 
 
 class RegisterForm(FlaskForm):

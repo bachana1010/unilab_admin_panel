@@ -1,7 +1,7 @@
 from flask import Flask,render_template
 from flask_admin import Admin
 from flask_admin.menu import MenuLink
-from app.configs import Config,PROJECT_ROOT
+from app.configs import Config, PROJECT_ROOT
 from app.extensions import db, migrate, login_manager
 
 
@@ -14,8 +14,8 @@ def create_app():
     app.config.from_object(Config)
 
     # register_commands(app)
-    # register_extensions(app)
     register_blueprints(app)
+    register_extensions(app)
     # register_admin_panel(app)
 
     return app
